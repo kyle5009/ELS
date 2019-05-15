@@ -1,3 +1,9 @@
+//main.cpp
+#include "ship.h"
+#include "game.h"
+
+std::vector<Ship *> ships;
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -7,24 +13,61 @@ using namespace std;
 sf::Texture spritesheet;
 sf::Sprite invader;
 
-int gameWidth = 1000;
-int gameHeight = 750;
 
 void Load() {
   if (!spritesheet.loadFromFile("res/img/earthlaststand_sheet.png")) {
     cerr << "Failed to load spritesheet!" << std::endl;
   }
   invader.setTexture(spritesheet);
-  invader.setTextureRect(sf::IntRect(0, 0, 200, 100));
+  invader.setTextureRect(sf::IntRect(260, 80, 90, 35));
+  //invader.setTextureRect(sf::IntRect(0, 0, 200, 100));
+
+  Invader* inv = new Invader(sf::IntRect(260, 80, 90, 35), {300,250});
+  ships.push_back(inv);
+
+    auto rect = IntRect(260, 80, 90, 35);
+    for (int c = 0; c < invaders_columns; ++c) {
+		float leftMargin = gameWidth / 2 - 32 * invaders_columns / 2;
+		float topMargin = 300.f;
+
+        Vector2f position = { leftMargin + 100.f * c, topMargin + 100.f };
+        auto inv = new Invader(rect, position);
+        ships.push_back(inv);
+    }
 }
 
 void Update(RenderWindow &window)
 {
 
+	static Clock clock;
+	float dt = clock.restart().asSeconds();
+	// check and consume events
+	Event event;
+	while (window.pollEvent(event))
+	{
+		if (event.type == Event::Closed)
+		{
+			window.close();
+			return;
+		}
+	}
+
+	// quit via esc key
+	if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+		window.close();
+	}
+  for (auto &s : ships) {
+    s->Update(dt);
+  };
 }
 
-void Render(RenderWindow &window) {
-  window.draw(invader);
+void Render(RenderWindow &window)
+{
+	window.draw(invader);
+	for (const auto s : ships)
+	{
+		window.draw(*s);
+	}
 }
 
 int main()
