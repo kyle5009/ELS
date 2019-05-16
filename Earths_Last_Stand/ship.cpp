@@ -39,23 +39,30 @@ void Ship::Update(const float &dt) {}
 
 Ship::~Ship() = default;
 
-//Player::Player() : Ship(IntRect(200, 0, 130, 75)) {
-Player::Player() : Ship(IntRect(260, 80, 90, 35)) {
-	setPosition({ gameHeight * .5f, gameHeight - 32.f });
+Player::Player() : Ship(IntRect(200, 0, 130, 75)) {
+	setPosition({ gameHeight * .5f, gameHeight - 302.f });
 }
 
 void Player::Update(const float &dt) {
-    Ship::Update(dt);
+	Ship::Update(dt);
+		// Move Left
+		if (Keyboard::isKeyPressed(Keyboard::Left) && (getPosition().x - 16 > 0)) {
+			
+			move(-500 * dt, 0);
+		}
+		// Move Right
+		if (Keyboard::isKeyPressed(Keyboard::Right) && (getPosition().x + 16 < gameWidth)) {
+			
+			move(500 * dt, 0);
+		}
+		// Move up
+		if (Keyboard::isKeyPressed(Keyboard::Up) && (getPosition().y + 16 > 0)) {
 
-	float direction = 0.0f;
-	// Move Left
-	if (Keyboard::isKeyPressed(Keyboard::Left)) {
-		if (getPosition().x - 16 > 0)
-			direction--; //Deincrements the direction/position of ship
+			move(0, -500 * dt);
+		}
+		// Move down
+		if (Keyboard::isKeyPressed(Keyboard::Down) && (getPosition().y + 16 < 0)) {
+
+			move(0, 500 * dt);
+		}
 	}
-	// Move Right
-	if (Keyboard::isKeyPressed(Keyboard::Right)) {
-		if (getPosition().x + 16 < gameWidth)
-			direction++; //Increments the direction/position of ship
-	}
-}

@@ -3,6 +3,7 @@
 #include "game.h"
 
 std::vector<Ship *> ships;
+Ship* railGun;
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -14,13 +15,21 @@ sf::Texture spritesheet;
 sf::Sprite invader;
 
 
+
+void Reset() {
+	// Reset Invaders movement
+	Invader::direction = true;
+	Invader::speed = 30.f;
+	Invader::speed = 160.f;
+}
+
 void Load() {
   if (!spritesheet.loadFromFile("res/img/earthlaststand_sheet.png")) {
     cerr << "Failed to load spritesheet!" << std::endl;
   }
   invader.setTexture(spritesheet);
-  invader.setTextureRect(sf::IntRect(260, 80, 90, 35));
-  //invader.setTextureRect(sf::IntRect(0, 0, 200, 100));
+  //invader.setTextureRect(sf::IntRect(260, 80, 90, 35));
+  invader.setTextureRect(sf::IntRect(0, 0, 200, 100));
 
   Invader* inv = new Invader(sf::IntRect(260, 80, 90, 35), {300,250});
   ships.push_back(inv);
@@ -34,7 +43,17 @@ void Load() {
         auto inv = new Invader(rect, position);
         ships.push_back(inv);
     }
+
+	// Spawn railgun
+	auto player = new Player();
+	railGun = player;
+	ships.push_back(player);
+
+	Reset();
+
+
 }
+
 
 void Update(RenderWindow &window)
 {
@@ -69,6 +88,7 @@ void Render(RenderWindow &window)
 		window.draw(*s);
 	}
 }
+
 
 int main()
 {
