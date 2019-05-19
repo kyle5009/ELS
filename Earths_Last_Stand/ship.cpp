@@ -61,7 +61,7 @@ void Player::Update(const float &dt) {
 			move(0, -500 * dt);
 		}
 		// Move down
-		if (Keyboard::isKeyPressed(Keyboard::Down) && (getPosition().y + 16 < 0)) {
+		if (Keyboard::isKeyPressed(Keyboard::Down) && (getPosition().y + 16 < gameHeight)) {
 
 			move(0, 500 * dt);
 		}
