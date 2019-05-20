@@ -47,8 +47,14 @@ void Bullet::Render(sf::RenderWindow &window) {
 
 
 void Bullet::Update(const float &dt) {
-    //move(0, dt * 200.0f * (_mode ? 1.0f : -1.0f));
+	for (auto &b : bullets) {
+		b._Update(dt);
+	}
 }
+
+//void Bullet::Update(const float &dt) {
+    //move(0, dt * 200.0f * (_mode ? 1.0f : -1.0f));
+//}
 
 void Bullet::_Update(const float &dt) {
     if (getPosition().y < -32 || getPosition().y > gameHeight + 32) {
