@@ -34,9 +34,19 @@ void Invader::Update(const float &dt) {
 			ships[i]->move(0, 24);
 		}
 	}
+
+	static float firetime = 0.f;
+	firetime -= dt;
+	if (firetime <= 0 && rand() % 100 == 0 && !_exploded) {
+		Bullet::Fire(getPosition(), true);
+		firetime = 4.f + (rand() % 60);
+	}
+
 }
 void Invader::Explode()
 {
+	Ship::Explode();
+	setTextureRect(IntRect(215, 80, 40, 45));
 }
 void Ship::Update(const float &dt) {}
 
@@ -77,15 +87,13 @@ void Player::Update(const float &dt) {
 			firetime = 0.7f;
 		}
 
-		//}
-		//for (const auto s : bullets) {
-		//	bullets.Update(dt);
-		//}
 
 	}
 
 void Player::Explode()
 {
+	setTextureRect(IntRect(128, 32, 32, 32));
+	_exploded = true;
 }
 
 bool Ship::is_exploded() const
@@ -97,5 +105,6 @@ void Ship::Explode() {
 	setTextureRect(IntRect(128, 32, 32, 32));
 	_exploded = true;
 }
+
 
  
