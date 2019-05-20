@@ -20,6 +20,7 @@ Ship::Ship(IntRect ir) : Sprite() {
   _sprite = ir;
   setTexture(spritesheet);
   setTextureRect(_sprite);
+  _exploded = false;
 };
 
 
@@ -48,8 +49,15 @@ void Invader::Explode()
 	Ship::Explode();
 	setTextureRect(IntRect(215, 80, 40, 45));
 }
-void Ship::Update(const float &dt) {}
-
+void Ship::Update(const float &dt) {
+// removes exploded enemy
+if (_exploded) {
+	_explosiontime -= dt;
+}
+if (_explosiontime <= 0.f) {
+	setColor(Color(0, 0, 0, 0));
+}
+}
 
 Ship::~Ship() = default;
 
@@ -98,11 +106,11 @@ void Player::Explode()
 
 bool Ship::is_exploded() const
 {
-	return false;
+	return _exploded;
 }
 
 void Ship::Explode() {
-	setTextureRect(IntRect(128, 32, 32, 32));
+	//setTextureRect(IntRect(128, 32, 32, 32));
 	_exploded = true;
 }
 
