@@ -3,11 +3,28 @@
 
 class Bullet : public sf::Sprite {
 public:
-  void Update(const float &dt);
-  Bullet(const sf::Vector2f &pos, const bool mode);
-  ~Bullet()=default;
+	static void Update(const float &dt);
+	Bullet(const sf::Vector2f &pos, const bool mode);
+
+	//Renders All bullets
+	static void Render(sf::RenderWindow &window);
+
+	//Choose an inactive bullet and use it.
+	static void Fire(const sf::Vector2f &pos, const bool mode);
+	//void Update(const float &dt); maybe a this back in later?
+	
+	~Bullet()=default;
+
+
+
 protected:
-  Bullet();
-  //false=player bullet, true=Enemy bullet
-  bool _mode;
+	bool _mode;
+
+	static unsigned char bulletPointer;
+	static Bullet bullets[256];
+
+	Bullet();
+
+	void _Update(const float &dt);
+
 };

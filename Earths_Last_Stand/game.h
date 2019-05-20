@@ -9,3 +9,4 @@ constexpr uint16_t invaders_columns = 6;
 extern sf::Texture spritesheet;
 extern std::vector<Ship*> ships;
 extern Ship* railGun;
+//extern Player* player;

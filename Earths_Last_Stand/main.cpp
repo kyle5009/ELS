@@ -1,9 +1,11 @@
 //main.cpp
 #include "ship.h"
 #include "game.h"
+#include "bullet.h"
 
 std::vector<Ship *> ships;
 Ship* railGun;
+
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -78,6 +80,10 @@ void Update(RenderWindow &window)
   for (auto &s : ships) {
     s->Update(dt);
   };
+
+  Bullet::Update(dt);
+
+
 }
 
 void Render(RenderWindow &window)
@@ -87,6 +93,8 @@ void Render(RenderWindow &window)
 	{
 		window.draw(*s);
 	}
+	Bullet::Render(window);
+
 }
 
 
